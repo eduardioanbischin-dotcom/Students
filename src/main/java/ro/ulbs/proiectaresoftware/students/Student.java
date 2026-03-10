@@ -1,6 +1,7 @@
 package ro.ulbs.proiectaresoftware.students;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Student {
     int numarMatricol;
@@ -13,6 +14,18 @@ public class Student {
         this.prenume = prenume;
         this.nume = nume;
         this.formatieDeStudiu = formatieDeStudiu;
+    }
+
+
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return numarMatricol == student.numarMatricol && Objects.equals(prenume, student.prenume) && Objects.equals(nume, student.nume) && Objects.equals(formatieDeStudiu, student.formatieDeStudiu);
+    }
+
+
+    public int hashCode() {
+        return Objects.hash(numarMatricol, prenume, nume, formatieDeStudiu);
     }
 
     public int getNumarMatricol() {
@@ -30,10 +43,15 @@ public class Student {
     public String getFormatieDeStudiu() {
         return formatieDeStudiu;
     }
-    boolean  listacontine(List <Student> st){
+    boolean listacontine(List <Student> st){
+
         if(st.contains(this)){
+
             return true;
+
         }
-        else  return false;
+
+        else return false;
+
     }
 }
