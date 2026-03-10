@@ -1,5 +1,7 @@
 package ro.ulbs.proiectaresoftware.students;
 
+import java.util.List;
+
 public class Student {
     int numarMatricol;
     String prenume;
@@ -27,5 +29,11 @@ public class Student {
 
     public String getFormatieDeStudiu() {
         return formatieDeStudiu;
+    }
+    boolean  listacontine(List <Student> st){
+        if(st.contains(this)){
+            return true;
+        }
+        else  return false;
     }
 }

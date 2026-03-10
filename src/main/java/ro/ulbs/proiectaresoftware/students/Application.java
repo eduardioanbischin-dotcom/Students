@@ -24,10 +24,11 @@ public class Application {
         for(Student s : st ){
             System.out.println(s.getNumarMatricol()+" "+ s.getNume()+ " "+ s.getPrenume()+" "+s.getFormatieDeStudiu());
         }
+
         Student b=new Student(120,"Alis","Popa","TI21/2");
         Student c=new Student(112,"Maria","Popa","TI21/1");
-        System.out.println(st.contains(b));
-        System.out.println(st.contains(c));
+        System.out.println(b.listacontine(st));
+        System.out.println(c.listacontine(st));
 
     }
 }
