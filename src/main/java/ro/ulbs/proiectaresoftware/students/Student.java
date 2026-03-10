@@ -1,5 +1,6 @@
 package ro.ulbs.proiectaresoftware.students;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ public class Student {
         this.nume = nume;
         this.formatieDeStudiu = formatieDeStudiu;
     }
+
 
 
     public boolean equals(Object o) {
@@ -43,9 +45,11 @@ public class Student {
     public String getFormatieDeStudiu() {
         return formatieDeStudiu;
     }
-    boolean listacontine(List <Student> st){
 
-        if(st.contains(this)){
+
+        boolean listacontine(List <Student> st){
+        HashSet<Student> studentHashSet=new HashSet<Student>(st);
+        if(studentHashSet.contains(this)){
 
             return true;
 
