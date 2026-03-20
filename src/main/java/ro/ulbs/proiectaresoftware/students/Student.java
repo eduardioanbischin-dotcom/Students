@@ -27,7 +27,7 @@ public class Student {
 
 
     public int hashCode() {
-        return Objects.hash(numarMatricol, prenume, nume, formatieDeStudiu);
+        return Objects.hash(numarMatricol, formatieDeStudiu);
     }
 
     public int getNumarMatricol() {
