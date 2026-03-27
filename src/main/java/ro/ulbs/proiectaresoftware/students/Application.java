@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Application {
 
@@ -27,6 +25,7 @@ public class Application {
         System.out.println(s3.getNumarMatricol()+" "+ s3.getNume()+ " "+ s3.getPrenume()+" "+s3.getFormatieDeStudiu());
         System.out.println(s4.getNumarMatricol()+" "+ s4.getNume()+ " "+ s4.getPrenume()+" "+s4.getFormatieDeStudiu());
         System.out.println(s5.getNumarMatricol()+" "+ s5.getNume()+ " "+ s5.getPrenume()+" "+s5.getFormatieDeStudiu());
+        List<Student> st=new ArrayList<>();
         */
 
         List<Student> st = new ArrayList<>();
@@ -39,6 +38,9 @@ public class Application {
         for(Student s : st ){
             System.out.println(s.getNumarMatricol()+" "+ s.getNume()+ " "+ s.getPrenume()+" "+s.getFormatieDeStudiu());
         }
+
+        Student b=new Student(120,"Alis","Popa","TI21/2");
+        Student c=new Student(112,"Maria","Popa","TI21/1");
 */
         Student b = new Student(120, "Alis", "Popa", "TI21/2");
         Student c = new Student(112, "Maria", "Popa", "TI21/1");
@@ -46,15 +48,16 @@ public class Application {
         System.out.println(b.listacontine(st));
         System.out.println(c.listacontine(st));
 */
+        Path inputnote=Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\src\\note.anon.txt");
         Path input = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\students.in.txt");
         Path output = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\students.out.txt");
         try {
 
             List<String> linii = Files.readAllLines(input);
-
+List<String> note=Files.readAllLines(inputnote);
 
             List<Student> listaStudenti = new ArrayList<>();
-
+            HashMap<Integer,Student> Studenti=new HashMap<>();
             for (String linie : linii) {
 
                 String[] date = linie.split(",");
@@ -64,23 +67,35 @@ public class Application {
                 String Grupa = date[3].trim();
 
                 listaStudenti.add(new Student(nr_matricol, Prenume, Nume, Grupa));
+                 Studenti.put(nr_matricol,new Student(nr_matricol, Prenume, Nume, Grupa));
             }
+               for(String n:note){
+             String[]date2=n.split(",");
+              int nr_matricol=Integer.parseInt(date2[0].trim());
+              float notes=Float.parseFloat(date2[1].trim());
+Student s=Studenti.get(nr_matricol);
+if(s!=null)
+s.setNota(notes);
 
-
+             }
+for (Map.Entry<Integer,Student> stu :Studenti.entrySet()) {
+            System.out.println(stu.getValue().toString());
+        }
             writeLargerTextFile(listaStudenti, output);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } public static void writeLargerTextFile(List<Student> studenti, Path path) throws IOException {
-        List<String> deScris = new ArrayList<>();
-        for (Student s : studenti) {
 
-            deScris.add(s.getNumarMatricol() + "," + s.getPrenume() + "," + s.getNume() + "," + s.getFormatieDeStudiu());
-        }
-        Files.write(path, deScris);
-    }
 }
+public static void writeLargerTextFile(List<Student> studenti, Path path) throws IOException {
+    List<String> deScris = new ArrayList<>();
+    for (Student s : studenti) {
+
+        deScris.add(s.getNumarMatricol() + "," + s.getPrenume() + "," + s.getNume() + "," + s.getFormatieDeStudiu());
+    }
+    Files.write(path, deScris);
+}}
 
 
 

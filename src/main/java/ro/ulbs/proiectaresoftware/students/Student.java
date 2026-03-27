@@ -9,7 +9,7 @@ public class Student {
     String prenume;
     String nume;
     String formatieDeStudiu;
-    int nota;
+    float nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         this.numarMatricol = numarMatricol;
@@ -18,7 +18,7 @@ public class Student {
         this.formatieDeStudiu = formatieDeStudiu;
     }
 
-    public void setNota(int nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 
