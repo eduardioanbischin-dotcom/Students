@@ -9,6 +9,7 @@ public class Student {
     String prenume;
     String nume;
     String formatieDeStudiu;
+    int nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         this.numarMatricol = numarMatricol;
@@ -17,7 +18,9 @@ public class Student {
         this.formatieDeStudiu = formatieDeStudiu;
     }
 
-
+    public void setNota(int nota) {
+        this.nota = nota;
+    }
 
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -25,6 +28,13 @@ public class Student {
         return  hashCode()==student.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return  numarMatricol+" "+ prenume + ' ' +
+                  nume +
+                " " + formatieDeStudiu + " " +
+                " " + nota ;
+    }
 
     public int hashCode() {
         return Objects.hash(numarMatricol);
