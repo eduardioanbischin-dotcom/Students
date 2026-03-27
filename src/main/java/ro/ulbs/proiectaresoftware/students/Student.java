@@ -1,5 +1,6 @@
 package ro.ulbs.proiectaresoftware.students;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -56,8 +57,11 @@ public class Student {
         return formatieDeStudiu;
     }
 
+    public float getNota() {
+        return nota;
+    }
 
-        boolean listacontine(List <Student> st){
+    boolean listacontine(List <Student> st){
         HashSet<Student> studentHashSet=new HashSet<Student>(st);
         if(studentHashSet.contains(this)){
 

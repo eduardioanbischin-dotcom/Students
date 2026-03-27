@@ -51,13 +51,14 @@ public class Application {
         Path inputnote=Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\src\\note.anon.txt");
         Path input = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\students.in.txt");
         Path output = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\students.out.txt");
+        HashMap<Integer,Student> tineri=new HashMap<>();
         try {
 
             List<String> linii = Files.readAllLines(input);
 List<String> note=Files.readAllLines(inputnote);
 
             List<Student> listaStudenti = new ArrayList<>();
-            HashMap<Integer,Student> Studenti=new HashMap<>();
+
             for (String linie : linii) {
 
                 String[] date = linie.split(",");
@@ -67,27 +68,46 @@ List<String> note=Files.readAllLines(inputnote);
                 String Grupa = date[3].trim();
 
                 listaStudenti.add(new Student(nr_matricol, Prenume, Nume, Grupa));
-                 Studenti.put(nr_matricol,new Student(nr_matricol, Prenume, Nume, Grupa));
+                tineri.put(nr_matricol,new Student(nr_matricol, Prenume, Nume, Grupa));
             }
                for(String n:note){
              String[]date2=n.split(",");
               int nr_matricol=Integer.parseInt(date2[0].trim());
               float notes=Float.parseFloat(date2[1].trim());
-Student s=Studenti.get(nr_matricol);
+Student s=tineri.get(nr_matricol);
 if(s!=null)
 s.setNota(notes);
 
              }
-for (Map.Entry<Integer,Student> stu :Studenti.entrySet()) {
+
+for (Map.Entry<Integer,Student> stu :tineri.entrySet()) {
             System.out.println(stu.getValue().toString());
+
+
         }
             writeLargerTextFile(listaStudenti, output);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        float notaM = gasesteNota("Bianca", "Popescu", tineri);
+        float notaN = gasesteNota("Ioan", "Popa", tineri);
 
+        System.out.println("Nota Bianca: " + notaM);
+        System.out.println("Nota Ioan: " + notaN);
 }
+    public  static float gasesteNota(String prenume, String nume, HashMap<Integer,Student> Studenti){
+        HashMap<String, Student> cautareRapida = new HashMap<>();
+
+        for (Student s : Studenti.values()) {
+            String cheie = s.getPrenume() + "-" + s.getNume();
+            cautareRapida.put(cheie, s);
+        }
+
+        String cheieCautata = prenume + "-" + nume;
+        Student gasit = cautareRapida.get(cheieCautata);
+        return (gasit != null) ? gasit.getNota() : 0.0f;
+    }
 public static void writeLargerTextFile(List<Student> studenti, Path path) throws IOException {
     List<String> deScris = new ArrayList<>();
     for (Student s : studenti) {
