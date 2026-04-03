@@ -1,0 +1,4 @@
+1025 Andrei Popa null  8.7 725.5
+1024 Ioan Mihalcea null  9.8 801.1
+1026 Anamaria Prodan null  8.9 745.5
+1029 Bianca Popescu null  9.1 780.8

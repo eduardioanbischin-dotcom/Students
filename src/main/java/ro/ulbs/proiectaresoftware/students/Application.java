@@ -10,10 +10,7 @@ import java.util.*;
 public class Application {
 
 
-
-
-
-    static void main() {
+    static void main(String[] args) {
         Student s1 = new Student(112, "Ioan", "Popa", "TI21/1");
         Student s2 = new Student(112, "Maria", "Oprea", "TI21/1");
         Student s3 = new Student(120, "Alis", "Popa", "TI21/2");
@@ -48,14 +45,15 @@ public class Application {
         System.out.println(b.listacontine(st));
         System.out.println(c.listacontine(st));
 */
-        Path inputnote=Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\src\\note.anon.txt");
+        Path inputnote = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\src\\note.anon.txt");
         Path input = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\students.in.txt");
         Path output = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\students.out.txt");
-        HashMap<Integer,Student> tineri=new HashMap<>();
+        Path outbursieri = Paths.get("C:\\Users\\Edi\\IdeaProjects\\Students\\src\\bursieri.out.txt");
+        HashMap<Integer, Student> tineri = new HashMap<>();
         try {
 
             List<String> linii = Files.readAllLines(input);
-List<String> note=Files.readAllLines(inputnote);
+            List<String> note = Files.readAllLines(inputnote);
 
             List<Student> listaStudenti = new ArrayList<>();
 
@@ -68,25 +66,30 @@ List<String> note=Files.readAllLines(inputnote);
                 String Grupa = date[3].trim();
 
                 listaStudenti.add(new Student(nr_matricol, Prenume, Nume, Grupa));
-                tineri.put(nr_matricol,new Student(nr_matricol, Prenume, Nume, Grupa));
+                tineri.put(nr_matricol, new Student(nr_matricol, Prenume, Nume, Grupa));
             }
-               for(String n:note){
-             String[]date2=n.split(",");
-              int nr_matricol=Integer.parseInt(date2[0].trim());
-              float notes=Float.parseFloat(date2[1].trim());
-Student s=tineri.get(nr_matricol);
-if(s!=null)
-s.setNota(notes);
+            for (String n : note) {
+                String[] date2 = n.split(",");
+                int nr_matricol = Integer.parseInt(date2[0].trim());
+                float notes = Float.parseFloat(date2[1].trim());
+                Student s = tineri.get(nr_matricol);
+                if (s != null)
+                    s.setNota(notes);
 
-             }
+            }
 
-for (Map.Entry<Integer,Student> stu :tineri.entrySet()) {
-            System.out.println(stu.getValue().toString());
+            for (Map.Entry<Integer, Student> stu : tineri.entrySet()) {
+                System.out.println(stu.getValue().toString());
 
 
-        }
+            }
             writeLargerTextFile(listaStudenti, output);
-
+            List<StudentBursier> bursieri = new ArrayList<StudentBursier>();
+            bursieri.add(new StudentBursier(1025, "Andrei", "Popa", "ISM141/2", 8.70f, 725.50));
+            bursieri.add(new StudentBursier(1024, "Ioan", "Mihalcea", "ISM141/1", 9.80f, 801.10));
+            bursieri.add(new StudentBursier(1026, "Anamaria", "Prodan", "TI131/1", 8.90f, 745.50));
+            bursieri.add(new StudentBursier(1029, "Bianca", "Popescu", "TI131/1,", 9.10f, 780.80));
+            writeLargerTextFile(bursieri, outbursieri);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,8 +98,10 @@ for (Map.Entry<Integer,Student> stu :tineri.entrySet()) {
 
         System.out.println("Nota Bianca: " + notaM);
         System.out.println("Nota Ioan: " + notaN);
-}
-    public  static float gasesteNota(String prenume, String nume, HashMap<Integer,Student> Studenti){
+
+    }
+
+    public static float gasesteNota(String prenume, String nume, HashMap<Integer, Student> Studenti) {
         HashMap<String, Student> cautareRapida = new HashMap<>();
 
         for (Student s : Studenti.values()) {
@@ -108,14 +113,18 @@ for (Map.Entry<Integer,Student> stu :tineri.entrySet()) {
         Student gasit = cautareRapida.get(cheieCautata);
         return (gasit != null) ? gasit.getNota() : 0.0f;
     }
-public static void writeLargerTextFile(List<Student> studenti, Path path) throws IOException {
-    List<String> deScris = new ArrayList<>();
-    for (Student s : studenti) {
 
-        deScris.add(s.getNumarMatricol() + "," + s.getPrenume() + "," + s.getNume() + "," + s.getFormatieDeStudiu());
+    public static void writeLargerTextFile(List<? extends Student> studenti, Path path) throws IOException {
+        List<String> deScris = new ArrayList<>();
+        for (Student s : studenti) {
+
+            deScris.add(s.toString());
+        }
+        Files.write(path, deScris);
     }
-    Files.write(path, deScris);
-}}
+
+
+}
 
 
 

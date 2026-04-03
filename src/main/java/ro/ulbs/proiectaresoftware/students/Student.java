@@ -6,17 +6,24 @@ import java.util.List;
 import java.util.Objects;
 
 public class Student {
-    int numarMatricol;
-    String prenume;
-    String nume;
-    String formatieDeStudiu;
-    float nota;
+protected int numarMatricol;
+    protected String prenume;
+    protected String nume;
+    protected String formatieDeStudiu;
+    protected float nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         this.numarMatricol = numarMatricol;
         this.prenume = prenume;
         this.nume = nume;
         this.formatieDeStudiu = formatieDeStudiu;
+    }
+    public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu,float  nota) {
+        this.numarMatricol = numarMatricol;
+        this.prenume = prenume;
+        this.nume = nume;
+
+        this.nota=nota;
     }
 
     public void setNota(float nota) {
