@@ -22,7 +22,7 @@ protected int numarMatricol;
         this.numarMatricol = numarMatricol;
         this.prenume = prenume;
         this.nume = nume;
-
+this.formatieDeStudiu=formatieDeStudiu;
         this.nota=nota;
     }
 

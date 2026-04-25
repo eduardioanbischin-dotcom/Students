@@ -7,6 +7,11 @@ public class NewIntCalculator extends ACalculator {
 state=0;
         return this;
     }
+
+    public NewIntCalculator init(Integer x) {
+        state = x;
+        return this;
+    }
     public NewIntCalculator add(Integer s){
         state=(Integer) state+s;
     return this;
@@ -20,4 +25,10 @@ state=0;
          state=(Integer) state*s;
     return this;
     }
+
+    public NewIntCalculator divide(Integer s) {
+        state = (Integer) state / s;
+        return this;
+    }
+
 }

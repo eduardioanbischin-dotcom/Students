@@ -6,6 +6,11 @@ public class DoubleCalculator extends ACalculator {
         state=0;
         return this;
     }
+
+    public DoubleCalculator init(Double x) {
+        state = x;
+        return this;
+    }
     public DoubleCalculator add(Double s){
         state=(Double) this.state+s;
 return this;
@@ -18,5 +23,11 @@ return this;
          state=(Double) this.state*s;
     return this;
     }
+
+    public DoubleCalculator divide(Double s) {
+        state = (Double) this.state / s;
+        return this;
     }
+
+}
 
