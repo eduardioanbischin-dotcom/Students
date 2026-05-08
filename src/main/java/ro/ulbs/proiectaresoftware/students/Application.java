@@ -1,6 +1,5 @@
 package ro.ulbs.proiectaresoftware.students;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +30,14 @@ public class Application {
         st.add(s3);
         st.add(s4);
         st.add(s5);
+        Set<Student>studenti=new HashSet<>();
+        studenti.add(s1);
+        studenti.add(s2);
+        studenti.add(s3);
+        studenti.add(s4);
+        studenti.add(s5);
+imparteInDouaFormatii(studenti,"TI21/1","TI22/1");
+        System.out.println(studenti);
         /*
         for(Student s : st ){
             System.out.println(s.getNumarMatricol()+" "+ s.getNume()+ " "+ s.getPrenume()+" "+s.getFormatieDeStudiu());
@@ -73,8 +80,8 @@ public class Application {
                 int nr_matricol = Integer.parseInt(date2[0].trim());
                 float notes = Float.parseFloat(date2[1].trim());
                 Student s = tineri.get(nr_matricol);
-                if (s != null)
-                    s.setNota(notes);
+                // if (s != null)
+                //       s.setNota(notes);
 
             }
 
@@ -123,6 +130,32 @@ public class Application {
         Files.write(path, deScris);
     }
 
+    static Student schimbaFormatia(Student st, String nouaFormatieDeStudiu) {
+        return new Student(st.getNumarMatricol(), st.getPrenume(), st.getNume(), nouaFormatieDeStudiu);
+    }
+
+
+    static Set<Student> imparteInDouaFormatii(Set<Student> studenti, String f1, String f2) {
+        Set<Student> setnou = new HashSet<>();
+        int nrstudenti = studenti.size();
+        int jumatate = nrstudenti / 2;
+        if (nrstudenti % 2 != 0) {
+            jumatate++;
+        }
+
+        int i = 0;
+        for (Student s : studenti) {
+            if (i < jumatate) {
+                setnou.add(schimbaFormatia(s, f1));
+            } else {
+
+                setnou.add(schimbaFormatia(s, f2));
+            }
+            i++;
+        }
+
+        return setnou;
+    }
 
 }
 

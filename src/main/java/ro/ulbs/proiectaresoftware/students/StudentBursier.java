@@ -26,10 +26,10 @@ public double getCuantumbursa(){
     }
     @Override
     public String toString() {
-        return  numarMatricol+" "+ prenume + ' ' +
-                nume +
-                " " + formatieDeStudiu + " " +
-                " " + nota+" "+cuantumbursa ;
+        return  this.getNumarMatricol()+" "+ this.getPrenume() + ' ' +
+                this.getNume()+
+                " " + this.getFormatieDeStudiu() + " " +
+                " " + this.getNota()+" "+this.getCuantumbursa() ;
     }
 
 

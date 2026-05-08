@@ -7,10 +7,10 @@ import java.util.Objects;
 
 public class Student {
 protected int numarMatricol;
-    protected String prenume;
-    protected String nume;
-    protected String formatieDeStudiu;
-    protected float nota;
+    private String prenume;
+    private String nume;
+    private String formatieDeStudiu;
+    private float nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         this.numarMatricol = numarMatricol;
@@ -26,9 +26,9 @@ this.formatieDeStudiu=formatieDeStudiu;
         this.nota=nota;
     }
 
-    public void setNota(float nota) {
-        this.nota = nota;
-    }
+    //public void setNota(float nota) {
+    //    this.nota = nota;
+   // }
 
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
