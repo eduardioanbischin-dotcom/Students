@@ -1,6 +1,11 @@
 package ro.ulbs.proiectaresoftware.students;
 
-import java.io.IOException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,8 +13,7 @@ import java.util.*;
 
 public class Application {
 
-
-    static void main(String[] args) {
+    static void main(String[] args) throws IOException {
         Student s1 = new Student(112, "Ioan", "Popa", "TI21/1");
         Student s2 = new Student(112, "Maria", "Oprea", "TI21/1");
         Student s3 = new Student(120, "Alis", "Popa", "TI21/2");
@@ -105,7 +109,9 @@ imparteInDouaFormatii(studenti,"TI21/1","TI22/1");
 
         System.out.println("Nota Bianca: " + notaM);
         System.out.println("Nota Ioan: " + notaN);
-
+        exportaexcel(st);
+        List<Student> stexcel = new ArrayList<>();
+        extrageexcel(stexcel);
     }
 
     public static float gasesteNota(String prenume, String nume, HashMap<Integer, Student> Studenti) {
@@ -128,6 +134,8 @@ imparteInDouaFormatii(studenti,"TI21/1","TI22/1");
             deScris.add(s.toString());
         }
         Files.write(path, deScris);
+
+
     }
 
     static Student schimbaFormatia(Student st, String nouaFormatieDeStudiu) {
@@ -155,9 +163,99 @@ imparteInDouaFormatii(studenti,"TI21/1","TI22/1");
         }
 
         return setnou;
+
     }
 
+    public static void exportaexcel(List<Student> st) {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Studenti");
+
+
+        int rownum = 0;
+        Row row = sheet.createRow(rownum++);
+        Cell nrmatr = row.createCell(0);
+        nrmatr.setCellValue("NrMatricol");
+        Cell nume = row.createCell(1);
+        nume.setCellValue("Nume");
+        Cell prenume = row.createCell(2);
+        prenume.setCellValue("prenume");
+        Cell Formatie = row.createCell(3);
+        Formatie.setCellValue("Formatie de studiu");
+        for (Student student : st) {
+            Row row2 = sheet.createRow(rownum++);
+            int cellnum = 0;
+
+            Cell Nrmatr = row2.createCell(cellnum++);
+            Nrmatr.setCellValue(student.getNumarMatricol());
+            Cell Nume = row2.createCell(cellnum++);
+            Nume.setCellValue(student.getNume());
+            Cell Prenume = row2.createCell(cellnum++);
+            Prenume.setCellValue(student.getPrenume());
+            Cell Formatiedestudiu = row2.createCell(cellnum++);
+            Formatiedestudiu.setCellValue(student.getFormatieDeStudiu());
+        }
+
+        try {
+            FileOutputStream out = new FileOutputStream(new File("lab8students.xlsx"));
+            workbook.write(out);
+            out.close();
+            System.out.println("lab8students.xlsx written successfully on disk.");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<Student> extrageexcel(List<Student> st) throws IOException {
+        FileInputStream file = new FileInputStream(new File("lab8students.xlsx"));
+        XSSFWorkbook workbook2 = new XSSFWorkbook(file);
+        XSSFSheet sheet2 = workbook2.getSheetAt(0);
+
+        Iterator<Row> rowIterator = sheet2.iterator();
+        while (rowIterator.hasNext()) {
+
+            Row row = rowIterator.next();
+
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+
+            while (cellIterator.hasNext()) {
+
+                Cell cell = cellIterator.next();
+
+
+                switch (cell.getCellType()) {
+                    case NUMERIC:
+                        System.out.print(cell.getNumericCellValue() + "\t");
+                        break;
+                    case STRING:
+                        System.out.print(cell.getStringCellValue() + "\t");
+                        break;
+                }
+            }
+            if (row.getRowNum() != 0) {
+                Cell Prenume = row.getCell(2);
+                Cell NrMatr = row.getCell(0);
+                Cell Nume = row.getCell(1);
+                Cell Formatie = row.getCell(3);
+                String prenume = Prenume.getStringCellValue();
+                double matr = NrMatr.getNumericCellValue();
+                String nume = Nume.getStringCellValue();
+                String formatie = Formatie.getStringCellValue();
+                Student student = new Student((int) matr, prenume, nume, formatie);
+                st.add(student);
+            }
+
+            System.out.println();
+
+        }
+        workbook2.close();
+        file.close();
+        return st;
+    }
 }
+
 
 
 
