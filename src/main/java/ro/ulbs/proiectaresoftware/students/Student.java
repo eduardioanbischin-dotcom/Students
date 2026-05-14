@@ -26,9 +26,9 @@ this.formatieDeStudiu=formatieDeStudiu;
         this.nota=nota;
     }
 
-    //public void setNota(float nota) {
-    //    this.nota = nota;
-   // }
+    public void setNota(float nota) {
+        this.nota = nota;
+    }
 
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application {
 
@@ -112,7 +113,35 @@ imparteInDouaFormatii(studenti,"TI21/1","TI22/1");
         exportaexcel(st);
         List<Student> stexcel = new ArrayList<>();
         extrageexcel(stexcel);
+
+
+
+        List<Student> studentiCuNote = Arrays.asList(
+                new Student(1025,"Andrei","Popa","ISM141/2",  8.70f),
+                new Student(1024,"Ioan","Mihalcea","ISM141/1", 10f),
+                new Student(1026,"Anamaria","Prodan","TI131/1", 8.90f),
+                new Student(1029,"Bianca","Popescu","TI131/1,", 10),
+                new Student(1029,"Maria","Pana","TI131/2,", 4.10f),
+                new Student(1029,"Gabriela","Mohanu","TI131/2,", 7.33f),
+                new Student(1029,"Marius","Nasta","TI131/2,", 3.20f),
+                new Student(1029,"Marius","Nasta","TI131/1,", 5.12f),
+                new Student(1029,"Andrei","Dobrescu","TI131/2,", 2.22f)
+        );
+
+        List<Student> criteriu1=studentiCuNote.stream().filter(student -> student.getNota()==10).toList();
+        System.out.println("studenti cu nota 10:"+criteriu1);
+        List<Student> criteriu2=studentiCuNote.stream().filter(student -> student.getNota()<5).toList();
+        System.out.println("studenti cu nota sub 5:"+criteriu2);
+        studentiCuNote.stream().map(student -> {
+            if (student.getNota()<4){student.setNota(4);
+        } return student;}).collect(Collectors.toList());
+        float suma=studentiCuNote.stream().map(student -> student.getNota()).reduce(0.0f,(a,d)->a+d);
+        System.out.println(suma);
+
+        float average=suma/studentiCuNote.size();
+        System.out.println(average);
     }
+
 
     public static float gasesteNota(String prenume, String nume, HashMap<Integer, Student> Studenti) {
         HashMap<String, Student> cautareRapida = new HashMap<>();
